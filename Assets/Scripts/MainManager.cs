@@ -17,7 +17,6 @@ public class MainManager : MonoBehaviour
     private bool m_Started = false;
     private int m_Points;
     public int highScore = 0;
-    bool newHighScore = false;
     public string bestPlayer;
     public Text bestScoreText;
     private bool m_GameOver = false;
@@ -26,8 +25,8 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        bestPlayer = SaveManager.Instance.bestPlayer;
-        highScore = SaveManager.Instance.highScore;
+        bestPlayer = SaveManager.Instance.bestPlayer1;
+        highScore = SaveManager.Instance.highScore1;
         bestScoreText.text = $"Best Score: {bestPlayer}: {highScore}";
         playerName = SaveManager.Instance.playerName;
         ScoreText.text = $"{playerName}'s Score : 0";
@@ -81,18 +80,18 @@ public class MainManager : MonoBehaviour
         {
             highScore = m_Points;
             bestPlayer = playerName;
-            newHighScore = true;
         }
     }
 
     public void GameOver()
     {
-        SaveManager.Instance.currentScore = m_Points;
-        SaveManager.Instance.playerName = playerName;
-        SaveManager.Instance.SaveScore();
-
         m_GameOver = true;
         GameOverText.SetActive(true);
+
+        SaveManager.Instance.currentScore = m_Points;
+        SaveManager.Instance.playerName = playerName;
+        SaveManager.Instance.UpdateScore();
+        SaveManager.Instance.SaveScore();
 
 
     }

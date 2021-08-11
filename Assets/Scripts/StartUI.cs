@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class StartUI : MonoBehaviour
 {
@@ -14,4 +17,12 @@ public class StartUI : MonoBehaviour
         SaveManager.Instance.playerName = nameInput.text;
     }
 
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
+        Application.Quit();
+#endif
+    }
 }
